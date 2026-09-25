@@ -22,8 +22,8 @@
 
 - List the technologies and tools used in the project:
     - **Languages**: HTML, CSS, JavaScript
-    - **Libraries**: (e.g., GSAP for animations)
-    - **Other**: GitHub Pages for hosting, Figma for design
+    - **Libraries**: GSAP for animations
+    - **Other**: GitHub Pages for hosting
 
 ## Credits
 
@@ -32,4 +32,5 @@
 
 ## Future Enhancements
 
-- List any features you would’ve liked to add if given more time
+- Added more to the story
+-Easter Eggs 
