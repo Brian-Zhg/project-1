@@ -1,6 +1,5 @@
 body {
     background-image: url("assets/forest.webp");
-    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     background-color: black;
@@ -23,7 +22,7 @@ body::after {
 
     background: radial-gradient(circle 300px at var(--x) var(--y),
             transparent 0%,
-            rgba(0, 0, 0, .5) 100%);
+            rgba(0, 0, 0, 1) 100%);
 
     pointer-events: none;
 }
@@ -49,10 +48,33 @@ body::after {
     left: 5%;
 }
 
-.arrow {
+.leftarrow {
     z-index: 20;
-    right: 30vh;
+    right: 5%;
     position: relative;
     bottom: -60vh;
+    z-index: 20;
+    opacity: 80%;
+    cursor: pointer;
+}
+
+.rightarrow {
+    z-index: 20;
+    right: -25%;
+    position: relative;
+    bottom: -60vh;
+    z-index: 20;
+    opacity: 80%;
+    cursor: pointer;
+}
+
+#ball{
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    cursor: pointer;
+    top: 5%;
+    right: 5%;
+    object-fit: contain;
     z-index: 20;
 }

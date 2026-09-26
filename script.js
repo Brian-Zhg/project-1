@@ -1,3 +1,9 @@
+var currentRoom = 0;
+var currObstacle;
+const obstacles = ["zombie", "blocked", "chance"];
+var side;
+const sides = ["right", "left"];
+var aquiredBall= false; 
 
 //makes light follow mouse
 document.body.addEventListener("mousemove", function (e) {
@@ -15,6 +21,7 @@ document.body.addEventListener("mousemove", function (e) {
 
 const flashlight = document.querySelector('.flashlight');
 
+//flashlight movement
 document.addEventListener('mousemove', (e) => {
     // Get image center coordinates
     const rect = flashlight.getBoundingClientRect();
@@ -31,16 +38,57 @@ document.addEventListener('mousemove', (e) => {
     // Convert to degrees. 
     // Note: Adjust the offset (e.g., -90) if your image points in a different default direction (like up or down).
     const angleDeg = angleRad * (180 / Math.PI) + 90;
-    
-    const cappedAngle = Math.max(-45, Math.min(60, angleDeg));
 
+    var cappedAngle = Math.max(-45, Math.min(60, angleDeg));
+    if (angleDeg > 250) cappedAngle = -45;
     // Apply rotation
     flashlight.style.transform = `rotate(${cappedAngle}deg)`;
 });
 
+//hover over zombie 
 const zombie = document.getElementById("zombie");
 const snarl = new Audio('assets/snarl.mp3');
 
-zombie.addEventListener('mouseover', ()=>{
+zombie.addEventListener('mouseover', () => {
     snarl.play();
 })
+
+//magic 8 ball 
+const ball = document.getElementById("ball");
+ball.addEventListener("click", function () {
+    ball.src = "assets/inprocess.png";
+    gsap.to("#ball", {
+        y: "+=20",
+        duration: 0.08,
+        repeat: 9,
+        yoyo: true,
+        onComplete: () => {
+            if (currObstacle == "chance") {
+                if (side == "right") ball.src = "assets/goleft.png";
+                if(side == "left") ball.src = "assets/goright.png";
+            }
+            else{
+                ball.src = "assets/noluck.png";
+            }
+        }
+    });
+})
+
+//creates room, random obstacle and correct side
+function generateRoom() {
+    currObstacle = obstacles[Math.floor(Math.random() * obstacles.length)];
+    side = sides[Math.floor(Math.random(sides.length))];
+    document.body.style.setProperty("--circle-size", "300px");
+}
+
+function moveRoom(choseSide) {
+    if(side == choseSide) reset();
+    else{
+        generateRoom();
+        currentRoom++;
+    }
+}
+
+function reset(){
+    currentRoom = 0;
+}
