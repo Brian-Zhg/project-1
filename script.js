@@ -31,7 +31,16 @@ document.addEventListener('mousemove', (e) => {
     // Convert to degrees. 
     // Note: Adjust the offset (e.g., -90) if your image points in a different default direction (like up or down).
     const angleDeg = angleRad * (180 / Math.PI) + 90;
+    
+    const cappedAngle = Math.max(-45, Math.min(60, angleDeg));
 
     // Apply rotation
-    flashlight.style.transform = `rotate(${angleDeg}deg)`;
+    flashlight.style.transform = `rotate(${cappedAngle}deg)`;
 });
+
+const zombie = document.getElementById("zombie");
+const snarl = new Audio('assets/snarl.mp3');
+
+zombie.addEventListener('mouseover', ()=>{
+    snarl.play();
+})
