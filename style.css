@@ -111,7 +111,7 @@ body::after {
     display: none;
 }
 
-#startOver:hover{
+#startOver:hover {
     cursor: pointer;
 }
 
@@ -119,7 +119,7 @@ body.winner::after {
     display: none;
 }
 
-#vehicle{
+#vehicle {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -127,7 +127,7 @@ body.winner::after {
     display: none;
 }
 
-#youWin{
+#youWin {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -137,14 +137,16 @@ body.winner::after {
     display: none;
 }
 
-#vehicle:hover{
+#vehicle:hover {
     cursor: pointer;
 }
 
-@media (orientation: landscape) and (max-width: 1024px) {
+@media screen and (max-width: 1024px) and (orientation: landscape) and (orientation: landscape) and (max-height: 500px) {
+
     .flashlight {
-        width: 30vw;
-        bottom: -12vh;
+        width: 32vw;
+        bottom: -18vh;
+        left: 50%;
     }
 
     .zombie {
@@ -152,33 +154,53 @@ body.winner::after {
     }
 
     #blockade {
-        width: 14vw;
+        width: 15vw;
+        top: 50%;
+        left: 14%;
     }
 
     #leftarrow,
     #rightarrow {
-        width: 7vw;
+        width: 8vw;
+        top: 70%;
+    }
+
+    #leftarrow {
+        left: 12%;
+    }
+
+    #rightarrow {
+        right: 12%;
     }
 
     .ballz {
-        width: 15vw;
-    }
-}
-
-@media (orientation: landscape) and (max-height: 500px) {
-    .flashlight {
-        width: 32vw;
-        bottom: -18vh;
-    }
-
-    #leftarrow,
-    #rightarrow {
-        top: 70%;
-        width: 8vw;
+        width: 18vw;
+        height: 25vh;
+        top: 5vh;
+        right: 5vw;
     }
 
     #ballText {
-        font-size: 3vw;
+        font-size: 2.5vw;
+    }
+
+    #jumpscare {
+        width: 55vw;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    #startOver {
+        width: 30vw;
+    }
+
+    #vehicle {
+        width: 45vw;
+    }
+
+    #youWin {
+        font-size: 6vw;
     }
 }
 
