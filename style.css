@@ -20,8 +20,7 @@ body::after {
     content: "";
     position: fixed;
     inset: 0;
-
-    background: radial-gradient(circle 300px at var(--x) var(--y),
+    background: radial-gradient(circle var(--flashlight-size) at var(--x) var(--y),
             transparent 0%,
             rgba(0, 0, 0, 1) 100%);
 
@@ -42,11 +41,11 @@ body::after {
     display: none;
 }
 
-#blockade{
+#blockade {
     width: 15%;
     position: relative;
     top: 50%;
-    left:14%
+    left: 14%
 }
 
 #leftarrow {
@@ -93,6 +92,27 @@ body::after {
     margin: 0;
     text-align: center;
     font-size: x-large;
+}
+
+#jumpscare {
+    position: absolute;
+    display: none;
+    z-index: 30;
+    bottom: 0;
+    left: 30%;
+}
+
+#startOver {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    display: none;
+}
+
+#startOver:hover{
+    cursor: pointer;
 }
 
 @media (orientation: landscape) and (max-width: 1024px) {

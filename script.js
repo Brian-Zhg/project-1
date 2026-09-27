@@ -108,11 +108,12 @@ function generateRoom() {
     zombie.style.display = "none";
     currObstacle = obstacles[Math.floor(Math.random() * obstacles.length)];
     side = sides[Math.floor(Math.random() * sides.length)];
-    document.body.style.setProperty("--circle-size", "300px");
+    document.body.style.setProperty("--flashlight-size", "300px");
     flashlight.style.display = "block";
     lArrow.style.display = "block";
     rArrow.style.display = "block";
     ball.style.display = "block";
+    restart.style.display = "none";
     if (currObstacle == "zombie") {
         zombie.style.display = "block";
         if (side == "left") {
@@ -143,7 +144,7 @@ const blocked = new Audio("assets/blocked.mp3");
 const continued = new Audio("assets/blockedC.mp3");
 function moveRoom(choseSide) {
     document.body.style.setProperty("--circle-size", "0px");
-    console.log("Side: " + side+
+    console.log("Side: " + side +
         "Obstacle: " + currObstacle
     );
     if (side == choseSide && currObstacle == "blocked") {
@@ -152,7 +153,7 @@ function moveRoom(choseSide) {
             continued.play();
         }
     }
-    else if (side == choseSide && currObstacle == "zombie") {
+    else if (side == choseSide && (currObstacle == "zombie" || currObstacle == "chance")) {
         moving();
         reset();
     }
@@ -163,21 +164,45 @@ function moveRoom(choseSide) {
             breathing.play();
             generateRoom();
             currentRoom++;
-            breathing.onended =() =>{
-                const number =Math.floor(Math.random() * voiceLines.length);
-                const dialog = new Audio("assets/voicelines/"+voiceLines[number]);
-                dialog.play();
-                voiceLines.splice(index, number);
+            breathing.onended = () => {
+                const chance = Math.floor(Math.random() * 2);
+                if (chance % 2 == 0) {
+                    const number = Math.floor(Math.random() * voiceLines.length);
+                    const dialog = new Audio("assets/voicelines/" + voiceLines[number]);
+                    dialog.play();
+                    voiceLines.splice(index, number);
+                }
+
             }
         }
     }
 }
 
+
+const jumpscare = document.getElementById("jumpscare");
+const jumpscareSound = new Audio("assets/jumpscaresound.mp3");
+const restart = document.getElementById("startOver");
 function reset() {
+    running.play();
+    running.onended = () => {
+        jumpscare.style.display = "block";
+        jumpscare.currentTime = 0;
+        jumpscare.play();
+        jumpscareSound.play();
+        jumpscareSound.onended = () => {
+            setTimeout(() => {
+                document.body.style.cursor = 'auto';
+                jumpscare.style.display = "none";
+                restart.style.display = "block";
+            }, 2000);
+        }
+    }
     currentRoom = 0;
 }
 
-function moving(){
+//makes screen black 
+function moving() {
+    document.body.style.setProperty("--flashlight-size", "0px");
     flashlight.style.display = "none";
     lArrow.style.display = "none";
     rArrow.style.display = "none";
@@ -185,5 +210,11 @@ function moving(){
     ball.src = "assets/inprocess.png";
     ballText.innerHTML = "";
 }
+
+const reZero = new Audio("assets/restartSound.mp3");
+restart.addEventListener('click', function () {
+    generateRoom();
+    reZero.play();
+});
 
 generateRoom();
