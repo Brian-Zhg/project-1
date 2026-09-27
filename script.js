@@ -139,11 +139,14 @@ function generateRoom() {
     }
 }
 
-const winBack = document.getElementById("winBack");
+const vehicle = document.getElementById("vehicle")
+const win = document.getElementById("youWin")
 function winningRoom() {
     document.body.style.backgroundImage = "url('assets/sideOfRoad.webp')";
     document.body.style.backgroundColor = "transparent";
-
+    vehicle.style.display = "block";
+    win.style.display = "block";
+    document.body.style.cursor = 'auto';
     document.body.classList.add("winner");
 }
 
@@ -182,7 +185,7 @@ function moveRoom(choseSide) {
                     const number = Math.floor(Math.random() * voiceLines.length);
                     const dialog = new Audio("assets/voicelines/" + voiceLines[number]);
                     dialog.play();
-                    voiceLines.splice(number,1);
+                    voiceLines.splice(number, 1);
                 }
 
             }
@@ -225,6 +228,7 @@ function moving() {
     ballText.innerHTML = "";
 }
 
+//restarts
 const reZero = new Audio("assets/restartSound.mp3");
 const back = new Audio("assets/voicelines/doingBack.mp3")
 restart.addEventListener('click', function () {
@@ -235,5 +239,30 @@ restart.addEventListener('click', function () {
     }
     document.body.style.cursor = 'none';
 });
+
+const vroom = new Audio("assets/driveAway.mp3");
+const trumpet = new Audio("assets/trumpet.mp3");
+vehicle.addEventListener('click', function () {
+    vroom.play();
+    gsap.to("#youWin", {
+        opacity: 1,
+        duration: 4
+    });
+    gsap.to("#vehicle", {
+        rotation: -90,
+        duration: 3,
+        ease: "power2.in",
+        onComplete: () => {
+            gsap.to("#vehicle", {
+                y: "-100vh",
+                duration: 7,
+            })
+        }
+    });
+    vroom.onended = ()=>
+    {
+        trumpet.play();
+    }
+})
 
 generateRoom();

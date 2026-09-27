@@ -120,7 +120,25 @@ body.winner::after {
 }
 
 #vehicle{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: none;
+}
+
+#youWin{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: xx-large;
+    opacity: 0;
+    display: none;
+}
+
+#vehicle:hover{
+    cursor: pointer;
 }
 
 @media (orientation: landscape) and (max-width: 1024px) {
