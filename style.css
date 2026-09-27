@@ -3,6 +3,7 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-color: black;
+    background-size: cover;
 }
 
 html,
@@ -22,7 +23,7 @@ body::after {
 
     background: radial-gradient(circle 300px at var(--x) var(--y),
             transparent 0%,
-            rgba(0, 0, 0, 1) 100%);
+            rgba(0, 0, 0, 0) 100%);
 
     pointer-events: none;
 }
@@ -44,13 +45,13 @@ body::after {
 .zombie {
     width: 30%;
     position: relative;
-    top: 35%;
-    left: 15%;
+    top: 45%;
+    left: 5%;
 }
 
 .leftarrow {
     z-index: 20;
-    right: 0;
+    right: 10%;
     position: relative;
     bottom: -60vh;
     z-index: 20;
@@ -60,7 +61,7 @@ body::after {
 
 .rightarrow {
     z-index: 20;
-    right: -20%;
+    right: -35%;
     position: relative;
     bottom: -60vh;
     z-index: 20;
