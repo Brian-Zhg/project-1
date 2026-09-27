@@ -115,6 +115,14 @@ body::after {
     cursor: pointer;
 }
 
+body.winner::after {
+    display: none;
+}
+
+#vehicle{
+    display: none;
+}
+
 @media (orientation: landscape) and (max-width: 1024px) {
     .flashlight {
         width: 30vw;
@@ -155,3 +163,4 @@ body::after {
         font-size: 3vw;
     }
 }
+

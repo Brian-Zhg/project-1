@@ -104,6 +104,7 @@ const blockade = document.getElementById("blockade");
 
 //creates room, random obstacle and correct side
 function generateRoom() {
+    console.log("Current Room:" + currentRoom);
     blockade.style.display = "none";
     zombie.style.display = "none";
     currObstacle = obstacles[Math.floor(Math.random() * obstacles.length)];
@@ -138,6 +139,14 @@ function generateRoom() {
     }
 }
 
+const winBack = document.getElementById("winBack");
+function winningRoom() {
+    document.body.style.backgroundImage = "url('assets/sideOfRoad.webp')";
+    document.body.style.backgroundColor = "transparent";
+
+    document.body.classList.add("winner");
+}
+
 const running = new Audio("assets/runningSound.mp3");
 const breathing = new Audio("assets/breathing.mp3");
 const blocked = new Audio("assets/blocked.mp3");
@@ -162,15 +171,18 @@ function moveRoom(choseSide) {
         running.play();
         running.onended = () => {
             breathing.play();
-            generateRoom();
-            currentRoom++;
+            if (currentRoom > 7) { winningRoom(); }
+            else {
+                generateRoom();
+                currentRoom++;
+            }
             breathing.onended = () => {
                 const chance = Math.floor(Math.random() * 2);
                 if (chance % 2 == 0) {
                     const number = Math.floor(Math.random() * voiceLines.length);
                     const dialog = new Audio("assets/voicelines/" + voiceLines[number]);
                     dialog.play();
-                    voiceLines.splice(index, number);
+                    voiceLines.splice(number,1);
                 }
 
             }
@@ -207,14 +219,21 @@ function moving() {
     lArrow.style.display = "none";
     rArrow.style.display = "none";
     ball.style.display = "none";
+    zombie.style.display = "none";
+    blockade.style.display = "none";
     ball.src = "assets/inprocess.png";
     ballText.innerHTML = "";
 }
 
 const reZero = new Audio("assets/restartSound.mp3");
+const back = new Audio("assets/voicelines/doingBack.mp3")
 restart.addEventListener('click', function () {
     generateRoom();
     reZero.play();
+    reZero.onended = () => {
+        back.play();
+    }
+    document.body.style.cursor = 'none';
 });
 
 generateRoom();
