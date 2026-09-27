@@ -56,15 +56,20 @@ zombie.addEventListener('mouseover', () => {
 //magic 8 ball 
 const ball = document.getElementById("ball");
 const ballText = document.getElementById("ballText");
+const shaking = new Audio("assets/shaking.mp3");
+shaking.volume = .4;
 ball.addEventListener("click", function () {
     ball.src = "assets/inprocess.png";
     ballText.innerHTML = "";
+    shaking.play();
     gsap.to("#ball", {
         y: "+=20",
         duration: 0.08,
         repeat: 9,
         yoyo: true,
         onComplete: () => {
+            shaking.pause();
+            shaking.currentTime = 0;
             if (currObstacle == "chance") {
                 if (side == "right") {
                     ball.src = "assets/goleft.png";
@@ -83,21 +88,77 @@ ball.addEventListener("click", function () {
     });
 })
 
+const lArrow = document.getElementById("leftarrow");
+const rArrow = document.getElementById("rightarrow");
+
+lArrow.addEventListener('click', function(){
+    moveRoom("left");
+});
+
+rArrow.addEventListener('click', function(){
+    moveRoom("right");
+});
+
+const blockade = document.getElementById("blockade");
+
 //creates room, random obstacle and correct side
 function generateRoom() {
+    blockade.style.display = "none";
+    zombie.style.display = "none";
     currObstacle = obstacles[Math.floor(Math.random() * obstacles.length)];
-    side = sides[Math.floor(Math.random(sides.length))];
+    side = sides[Math.floor(Math.random() *sides.length)];
     document.body.style.setProperty("--circle-size", "300px");
+    flashlight.style.display = "block";
+    lArrow.style.display = "block";
+    rArrow.style.display = "block";
+    ball.style.display = "block";
+    if(currObstacle == "zombie"){
+        zombie.style.display = "block";
+        if(side == "left"){
+            zombie.style.left = "5%";
+            zombie.style.top = "45%"
+        }
+        else{
+            zombie.style.left = "67%";
+            zombie.style.top = "40%"
+        }
+    }
+    else if(currObstacle == "blocked"){
+        blockade.style.display = "block";
+        if(side == "left"){
+            blockade.style.left = "14%";
+            blockade.style.top = "50%"
+        }
+        else{
+            blockade.style.left = "75%";
+            blockade.style.top = "50%"
+        }
+    }
 }
 
+const running = new Audio("assets/runningSound.mp3");
+const breathing = new Audio("assets/breathing.mp3");
+
 function moveRoom(choseSide) {
+    document.body.style.setProperty("--circle-size", "0px");
+    flashlight.style.display = "none";
+    lArrow.style.display = "none";
+    rArrow.style.display = "none";
+    ball.style.display = "none";
+    ball.src = "assets/inprocess.png";
+    ballText.innerHTML = "";
     if(side == choseSide) reset();
     else{
-        generateRoom();
-        currentRoom++;
+        running.play();
+        running.onended= ()=>{
+            breathing.play();
+            generateRoom();
+            currentRoom++;
+        }
     }
 }
 
 function reset(){
     currentRoom = 0;
 }
+
