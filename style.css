@@ -36,12 +36,6 @@ body::after {
     transform: translateX(-100%);
 }
 
-.video-container {
-    width: 300px;
-    height: 300px;
-    overflow: hidden;
-}
-
 .zombie {
     width: 30%;
     position: relative;
@@ -101,3 +95,43 @@ body::after {
     font-size: x-large;
 }
 
+@media (orientation: landscape) and (max-width: 1024px) {
+    .flashlight {
+        width: 30vw;
+        bottom: -12vh;
+    }
+
+    .zombie {
+        width: 28vw;
+    }
+
+    #blockade {
+        width: 14vw;
+    }
+
+    #leftarrow,
+    #rightarrow {
+        width: 7vw;
+    }
+
+    .ballz {
+        width: 15vw;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .flashlight {
+        width: 32vw;
+        bottom: -18vh;
+    }
+
+    #leftarrow,
+    #rightarrow {
+        top: 70%;
+        width: 8vw;
+    }
+
+    #ballText {
+        font-size: 3vw;
+    }
+}

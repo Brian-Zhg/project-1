@@ -3,7 +3,7 @@ var currObstacle;
 const obstacles = ["zombie", "blocked", "chance"];
 var side;
 const sides = ["right", "left"];
-const voiceLines = ["car.mp3", "makeItHome.mp3", "mustOut", "pathTake"];
+const voiceLines = ["car.mp3", "makeItHome.mp3", "mustOut.mp3", "pathTake.mp3"];
 var aquiredBall = false;
 
 //makes light follow mouse
@@ -164,8 +164,10 @@ function moveRoom(choseSide) {
             generateRoom();
             currentRoom++;
             breathing.onended =() =>{
-                const dialog = new Audio("assets/voicelines/"+voiceLines[Math.floor(Math.random() * voiceLines.length)]);
+                const number =Math.floor(Math.random() * voiceLines.length);
+                const dialog = new Audio("assets/voicelines/"+voiceLines[number]);
                 dialog.play();
+                voiceLines.splice(index, number);
             }
         }
     }
