@@ -3,7 +3,8 @@ var currObstacle;
 const obstacles = ["zombie", "blocked", "chance"];
 var side;
 const sides = ["right", "left"];
-var aquiredBall= false; 
+const voiceLines = ["car.mp3", "makeItHome.mp3", "mustOut", "pathTake"];
+var aquiredBall = false;
 
 //makes light follow mouse
 document.body.addEventListener("mousemove", function (e) {
@@ -75,12 +76,12 @@ ball.addEventListener("click", function () {
                     ball.src = "assets/goleft.png";
                     ballText.innerHTML = "GO LEFT";
                 }
-                if(side == "left") {
+                if (side == "left") {
                     ball.src = "assets/goright.png";
                     ballText.innerHTML = "GO RIGHT";
                 }
             }
-            else{
+            else {
                 ball.src = "assets/noluck.png";
                 ballText.innerHTML = "GOODLUCK :)";
             }
@@ -91,11 +92,11 @@ ball.addEventListener("click", function () {
 const lArrow = document.getElementById("leftarrow");
 const rArrow = document.getElementById("rightarrow");
 
-lArrow.addEventListener('click', function(){
+lArrow.addEventListener('click', function () {
     moveRoom("left");
 });
 
-rArrow.addEventListener('click', function(){
+rArrow.addEventListener('click', function () {
     moveRoom("right");
 });
 
@@ -106,30 +107,30 @@ function generateRoom() {
     blockade.style.display = "none";
     zombie.style.display = "none";
     currObstacle = obstacles[Math.floor(Math.random() * obstacles.length)];
-    side = sides[Math.floor(Math.random() *sides.length)];
+    side = sides[Math.floor(Math.random() * sides.length)];
     document.body.style.setProperty("--circle-size", "300px");
     flashlight.style.display = "block";
     lArrow.style.display = "block";
     rArrow.style.display = "block";
     ball.style.display = "block";
-    if(currObstacle == "zombie"){
+    if (currObstacle == "zombie") {
         zombie.style.display = "block";
-        if(side == "left"){
+        if (side == "left") {
             zombie.style.left = "5%";
             zombie.style.top = "45%"
         }
-        else{
+        else {
             zombie.style.left = "67%";
             zombie.style.top = "40%"
         }
     }
-    else if(currObstacle == "blocked"){
+    else if (currObstacle == "blocked") {
         blockade.style.display = "block";
-        if(side == "left"){
+        if (side == "left") {
             blockade.style.left = "14%";
             blockade.style.top = "50%"
         }
-        else{
+        else {
             blockade.style.left = "75%";
             blockade.style.top = "50%"
         }
@@ -138,27 +139,49 @@ function generateRoom() {
 
 const running = new Audio("assets/runningSound.mp3");
 const breathing = new Audio("assets/breathing.mp3");
-
+const blocked = new Audio("assets/blocked.mp3");
+const continued = new Audio("assets/blockedC.mp3");
 function moveRoom(choseSide) {
     document.body.style.setProperty("--circle-size", "0px");
+    console.log("Side: " + side+
+        "Obstacle: " + currObstacle
+    );
+    if (side == choseSide && currObstacle == "blocked") {
+        blocked.play();
+        blocked.onended = () => {
+            continued.play();
+        }
+    }
+    else if (side == choseSide && currObstacle == "zombie") {
+        moving();
+        reset();
+    }
+    else {
+        moving();
+        running.play();
+        running.onended = () => {
+            breathing.play();
+            generateRoom();
+            currentRoom++;
+            breathing.onended =() =>{
+                const dialog = new Audio("assets/voicelines/"+voiceLines[Math.floor(Math.random() * voiceLines.length)]);
+                dialog.play();
+            }
+        }
+    }
+}
+
+function reset() {
+    currentRoom = 0;
+}
+
+function moving(){
     flashlight.style.display = "none";
     lArrow.style.display = "none";
     rArrow.style.display = "none";
     ball.style.display = "none";
     ball.src = "assets/inprocess.png";
     ballText.innerHTML = "";
-    if(side == choseSide) reset();
-    else{
-        running.play();
-        running.onended= ()=>{
-            breathing.play();
-            generateRoom();
-            currentRoom++;
-        }
-    }
 }
 
-function reset(){
-    currentRoom = 0;
-}
-
+generateRoom();
