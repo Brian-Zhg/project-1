@@ -55,8 +55,10 @@ zombie.addEventListener('mouseover', () => {
 
 //magic 8 ball 
 const ball = document.getElementById("ball");
+const ballText = document.getElementById("ballText");
 ball.addEventListener("click", function () {
     ball.src = "assets/inprocess.png";
+    ballText.innerHTML = "";
     gsap.to("#ball", {
         y: "+=20",
         duration: 0.08,
@@ -64,11 +66,18 @@ ball.addEventListener("click", function () {
         yoyo: true,
         onComplete: () => {
             if (currObstacle == "chance") {
-                if (side == "right") ball.src = "assets/goleft.png";
-                if(side == "left") ball.src = "assets/goright.png";
+                if (side == "right") {
+                    ball.src = "assets/goleft.png";
+                    ballText.innerHTML = "GO LEFT";
+                }
+                if(side == "left") {
+                    ball.src = "assets/goright.png";
+                    ballText.innerHTML = "GO RIGHT";
+                }
             }
             else{
                 ball.src = "assets/noluck.png";
+                ballText.innerHTML = "GOODLUCK :)";
             }
         }
     });

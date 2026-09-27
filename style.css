@@ -23,7 +23,7 @@ body::after {
 
     background: radial-gradient(circle 300px at var(--x) var(--y),
             transparent 0%,
-            rgba(0, 0, 0, 0) 100%);
+            rgba(0, 0, 0, 1) 100%);
 
     pointer-events: none;
 }
@@ -69,13 +69,27 @@ body::after {
     cursor: pointer;
 }
 
-#ball{
+.ballz {
     position: absolute;
-    width: 20%;
-    height: 20%;
-    cursor: pointer;
     top: 5%;
     right: 5%;
-    object-fit: contain;
+    width: 20%;
+    height: 20%;
     z-index: 20;
+}
+
+#ball {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    object-fit: contain;
+}
+
+#ballText {
+    color: white;
+    position: relative;
+    z-index: 20;
+    margin: 0;
+    text-align: center;
+    font-size: x-large;
 }
