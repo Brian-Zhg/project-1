@@ -6,6 +6,8 @@ const sides = ["right", "left"];
 const voiceLines = ["car.mp3", "makeItHome.mp3", "mustOut.mp3", "pathTake.mp3"];
 var aquiredBall = false;
 
+generateRoom();
+
 //makes light follow mouse
 document.body.addEventListener("mousemove", function (e) {
     document.documentElement.style.setProperty(
@@ -89,6 +91,7 @@ ball.addEventListener("click", function () {
     });
 })
 
+//arrow functions
 const lArrow = document.getElementById("leftarrow");
 const rArrow = document.getElementById("rightarrow");
 
@@ -139,17 +142,6 @@ function generateRoom() {
     }
 }
 
-const vehicle = document.getElementById("vehicle")
-const win = document.getElementById("youWin")
-function winningRoom() {
-    document.body.style.backgroundImage = "url('assets/sideOfRoad.webp')";
-    document.body.style.backgroundColor = "transparent";
-    vehicle.style.display = "block";
-    win.style.display = "block";
-    document.body.style.cursor = 'auto';
-    document.body.classList.add("winner");
-}
-
 const running = new Audio("assets/runningSound.mp3");
 const breathing = new Audio("assets/breathing.mp3");
 const blocked = new Audio("assets/blocked.mp3");
@@ -193,6 +185,19 @@ function moveRoom(choseSide) {
     }
 }
 
+//makes screen black 
+function moving() {
+    document.body.style.setProperty("--flashlight-size", "0px");
+    flashlight.style.display = "none";
+    lArrow.style.display = "none";
+    rArrow.style.display = "none";
+    ball.style.display = "none";
+    zombie.style.display = "none";
+    blockade.style.display = "none";
+    ball.src = "assets/inprocess.png";
+    ballText.innerHTML = "";
+}
+
 
 const jumpscare = document.getElementById("jumpscare");
 const jumpscareSound = new Audio("assets/jumpscaresound.mp3");
@@ -215,18 +220,19 @@ function reset() {
     currentRoom = 0;
 }
 
-//makes screen black 
-function moving() {
-    document.body.style.setProperty("--flashlight-size", "0px");
-    flashlight.style.display = "none";
-    lArrow.style.display = "none";
-    rArrow.style.display = "none";
-    ball.style.display = "none";
-    zombie.style.display = "none";
-    blockade.style.display = "none";
-    ball.src = "assets/inprocess.png";
-    ballText.innerHTML = "";
+//makes last winner room 
+const vehicle = document.getElementById("vehicle")
+const win = document.getElementById("youWin")
+function winningRoom() {
+    document.body.style.backgroundImage = "url('assets/sideOfRoad.webp')";
+    document.body.style.backgroundColor = "transparent";
+    vehicle.style.display = "block";
+    win.style.display = "block";
+    document.body.style.cursor = 'auto';
+    document.body.classList.add("winner");
 }
+
+
 
 //restarts
 const reZero = new Audio("assets/restartSound.mp3");
@@ -265,4 +271,3 @@ vehicle.addEventListener('click', function () {
     }
 })
 
-generateRoom();
