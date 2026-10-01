@@ -6,7 +6,7 @@ const sides = ["right", "left"];
 const voiceLines = ["car.mp3", "makeItHome.mp3", "mustOut.mp3", "pathTake.mp3"];
 var aquiredBall = false;
 
-generateRoom();
+
 
 //makes light follow mouse
 document.body.addEventListener("mousemove", function (e) {
@@ -271,3 +271,4 @@ vehicle.addEventListener('click', function () {
     }
 })
 
+generateRoom();
